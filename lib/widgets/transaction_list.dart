@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:personal_expenses_app/main.dart';
 
 import '../models/transaction.dart';
 
@@ -21,11 +22,11 @@ class TransactionList extends StatelessWidget {
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.red, width: 2)),
+                      border: Border.all(
+                          color: Theme.of(context).primaryColorDark, width: 2)),
                   child: Text(
                     '\$ ${transactions[index].amount.toStringAsFixed(2)}',
-                    style: TextStyle(
-                        color: Colors.red, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
                 Column(
