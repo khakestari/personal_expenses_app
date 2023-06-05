@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:personal_expenses_app/widgets/transaction_list.dart';
 
+
+import './widgets/transaction_list.dart';
+import './widgets/chart.dart';
 import './widgets/new_transaction.dart';
 import './models/transaction.dart';
 
@@ -37,13 +39,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // String? titleInput;
-  //
+
   final List<Transaction> _userTransactions = [
-    Transaction(
-        id: 't0', title: 'Cow\'s pussy', amount: 100, date: DateTime.now()),
-    Transaction(
-        id: 't1', title: 'Dog\'s dick', amount: 223.5, date: DateTime.now())
+    // Transaction(
+    //     id: 't0', title: 'Cow\'s pussy', amount: 100, date: DateTime.now()),
+    // Transaction(
+    //     id: 't1', title: 'Dog\'s dick', amount: 223.5, date: DateTime.now())
   ];
 
   void _addNewTransaction(String title, double amount) {
@@ -57,7 +58,13 @@ class _MyHomePageState extends State<MyHomePage> {
       _userTransactions.add(newTx);
     });
   }
-
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((element) {
+      return element.date.isAfter(DateTime.now().subtract(
+        Duration(days: 7),
+      ));
+    }).toList();
+  }
   void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
         context: ctx,
@@ -82,15 +89,8 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              height: 70,
-              child: Card(
-                child: Text('Place holder for chart'),
-                elevation: 5,
-                color: Colors.blue,
-              ),
-            ),
+              Chart(_recentTransactions),
+            
               TransactionList(_userTransactions),
             ],
           ),
