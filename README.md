@@ -1,16 +1,14 @@
-# personal_expenses_app
+# Personal Expenses App
 
-A new Flutter project.
+This is a simple personal expenses app built using Flutter. The app allows users to easily add and track their expenses, and view them in a list or on a weekly chart.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Add new expense items with a title, amount, and date
+- View a list of all expense items
+- Delete individual expense items
+- View expenses on a weekly chart
 
-A few resources to get you started if this is your first Flutter project:
+## Acknowledgements
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This app was inspired by the Personal Expenses App project from the [Flutter & Dart - The Complete Guide](https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/?kw=flutter&src=sac) course created by Maximilian Schwarzmüller on Udemy. Thank you to the instructors for providing such a great resource!
