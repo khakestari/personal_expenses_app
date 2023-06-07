@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
               headline6: TextStyle(
                   fontFamily: 'Shabnam',
                   fontWeight: FontWeight.bold,
-                  fontSize: 14)),
+                  fontSize: 14),
+              button: TextStyle(color: Color.fromARGB(255, 209, 191, 191))),
           appBarTheme: AppBarTheme(
               titleTextStyle: TextStyle(fontFamily: 'Shabnam', fontSize: 18))),
       home: MyHomePage(),
@@ -47,15 +48,20 @@ class _MyHomePageState extends State<MyHomePage> {
     //     id: 't1', title: 'Dog\'s dick', amount: 223.5, date: DateTime.now())
   ];
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime chosenDate) {
     final newTx = Transaction(
         id: DateTime.now().toString(),
         title: title,
         amount: amount,
-        date: DateTime.now());
+        date: chosenDate);
 
     setState(() {
       _userTransactions.add(newTx);
+    });
+  }
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((element) => element.id == id);
     });
   }
   List<Transaction> get _recentTransactions {
@@ -90,8 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
               Chart(_recentTransactions),
-            
-              TransactionList(_userTransactions),
+              TransactionList(_userTransactions, _deleteTransaction),
             ],
           ),
         ),
