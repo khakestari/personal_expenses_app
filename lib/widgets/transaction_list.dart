@@ -16,18 +16,18 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      height: 400,
+      height: MediaQuery.of(context).size.height * 0.6,
       child: transactions.isEmpty
           ? Column(children: [
               SizedBox(
-                height: 50,
+                height: 10,
               ),
               Text(
                 'No transactions added yet!',
                 style: Theme.of(context).textTheme.headline6,
               ),
               SizedBox(
-                height: 30,
+                height: 10,
               ),
               Container(
                 height: 200,
