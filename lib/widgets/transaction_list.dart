@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_expenses_app/main.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,26 +19,28 @@ class TransactionList extends StatelessWidget {
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height * 0.6,
       child: transactions.isEmpty
-          ? Column(children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'No transactions added yet!',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                height: 200,
-                child: Image.asset(
-                  'assets/images/1.png',
-                  fit: BoxFit.cover,
+          ? LayoutBuilder(builder: (context, Constraints) {
+              return Column(children: [
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-              //SvgPicture.asset('assets/image/minus-database-svgrepo-com.svg'),
-            ])
+                Text(
+                  'No transactions added yet!',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: Constraints.maxHeight * 0.6,
+                  child: Image.asset(
+                    'assets/images/1.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                //SvgPicture.asset('assets/image/minus-database-svgrepo-com.svg'),
+              ]);
+            })
           : ListView.builder(
         itemBuilder: (ctx, index) {
                 return Card(
