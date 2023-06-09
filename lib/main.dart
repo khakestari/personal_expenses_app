@@ -1,11 +1,11 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
-
+import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
 import './widgets/chart.dart';
-import './widgets/new_transaction.dart';
 import './models/transaction.dart';
 
 
@@ -94,25 +94,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+       mediaQuery.orientation == Orientation.landscape;
+
     final appBar = AppBar(
-          title: Text('Personal Expenses'),
-          actions: <Widget>[
-            IconButton(
+      title: Text(
+        'Personal Expenses',
+      ),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
                 onPressed: () => _startAddNewTransaction(context),
-                icon: Icon(Icons.add))
-          ],
+        ),
+      ],
     );
     final txListWidget = Container(
         height: (MediaQuery.of(context).size.height -
                 appBar.preferredSize.height -
-                MediaQuery.of(context).padding.top) *
+                mediaQuery.padding.top) *
             0.7,
         child: TransactionList(_userTransactions, _deleteTransaction));
-    return Scaffold(
-        appBar: appBar,
-        body: SingleChildScrollView(
+    final pageBody = SingleChildScrollView(
           child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -122,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text('Show Chart'),
-                  Switch(
+                Switch.adaptive(
                       value: _showChart,
                       onChanged: (val) {
                         setState(() {
@@ -135,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Container(
                       height: (MediaQuery.of(context).size.height -
                               appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
+                        mediaQuery.padding.top) *
                           0.3,
                     child: Chart(_recentTransactions)),
               if (!isLandscape) txListWidget,
@@ -144,15 +147,27 @@ class _MyHomePageState extends State<MyHomePage> {
                     ? Container(
                         height: (MediaQuery.of(context).size.height -
                               appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
+                            mediaQuery.padding.top) *
                           0.7,
                         child: Chart(_recentTransactions))
                     : txListWidget
             ],
           ),
-        ),
+    );
+
+    return
+        // Platform.isIOS
+        //     ? CupertinoPageScaffold(
+        //         child: pageBody,
+        //         navigationBar: appBar,
+        //       )
+        Scaffold(
+            appBar: appBar,
+            body: pageBody,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton(
+            floatingActionButton: Platform.isIOS
+                ? Container()
+                : FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () => _startAddNewTransaction(context),
         ));
