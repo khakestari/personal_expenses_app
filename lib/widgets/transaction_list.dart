@@ -36,12 +36,14 @@ class TransactionList extends StatelessWidget {
                 //SvgPicture.asset('assets/image/minus-database-svgrepo-com.svg'),
               ]);
             })
-          : ListView.builder(
-        itemBuilder: (ctx, index) {
-                return TransactionItem(
-                    transaction: transactions[index], deleteTx: deleteTx);
-        },
-        itemCount: transactions.length,
+          : ListView(
+              children: transactions
+                  .map((tx) => TransactionItem(
+                      key: ValueKey(tx.id),
+                      transaction: tx,
+                      deleteTx: deleteTx))
+                  .toList()
+            
       ),
     );
   }
