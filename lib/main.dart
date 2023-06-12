@@ -8,6 +8,12 @@ import './widgets/transaction_list.dart';
 import './widgets/chart.dart';
 import './models/transaction.dart';
 
+// *final* variables or properties are variables or properties which
+// are created dynamically at runtime but which then never change.
+
+// On the other hand, const properties or variables are properties
+// or variables that are holding a certain value which is already
+// known when the code compiles and which will never change after compilation.
 
 void main() {
   // lock to disable landscape mode
@@ -38,19 +44,16 @@ class MyApp extends StatelessWidget {
               titleTextStyle: TextStyle(fontFamily: 'Shabnam', fontSize: 18))),
       home: MyHomePage(),
       debugShowCheckedModeBanner: false,
-
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   final List<Transaction> _userTransactions = [
     // Transaction(
     //     id: 't0', title: 'Cow\'s pussy', amount: 100, date: DateTime.now()),
@@ -69,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _userTransactions.add(newTx);
     });
   }
+
   void _deleteTransaction(String id) {
     setState(() {
       _userTransactions.removeWhere((element) => element.id == id);
@@ -84,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ));
     }).toList();
   }
+
   void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
         context: ctx,
@@ -95,8 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final isLandscape =
-       mediaQuery.orientation == Orientation.landscape;
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
 
     final appBar = AppBar(
       title: Text(
@@ -105,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.add),
-                onPressed: () => _startAddNewTransaction(context),
+          onPressed: () => _startAddNewTransaction(context),
         ),
       ],
     );
@@ -116,43 +120,43 @@ class _MyHomePageState extends State<MyHomePage> {
             0.7,
         child: TransactionList(_userTransactions, _deleteTransaction));
     final pageBody = SingleChildScrollView(
-          child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-              if (isLandscape)
-                Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('Show Chart'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          if (isLandscape)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Show Chart'),
                 Switch.adaptive(
-                      value: _showChart,
-                      onChanged: (val) {
-                        setState(() {
-                          _showChart = val;
-                        });
-                      })
-                ],
-              ),
-              if (!isLandscape)
-                Container(
-                      height: (MediaQuery.of(context).size.height -
-                              appBar.preferredSize.height -
+                    value: _showChart,
+                    onChanged: (val) {
+                      setState(() {
+                        _showChart = val;
+                      });
+                    })
+              ],
+            ),
+          if (!isLandscape)
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
                         mediaQuery.padding.top) *
-                          0.3,
-                    child: Chart(_recentTransactions)),
-              if (!isLandscape) txListWidget,
-              if (isLandscape)
-                _showChart
-                    ? Container(
-                        height: (MediaQuery.of(context).size.height -
-                              appBar.preferredSize.height -
+                    0.3,
+                child: Chart(_recentTransactions)),
+          if (!isLandscape) txListWidget,
+          if (isLandscape)
+            _showChart
+                ? Container(
+                    height: (MediaQuery.of(context).size.height -
+                            appBar.preferredSize.height -
                             mediaQuery.padding.top) *
-                          0.7,
-                        child: Chart(_recentTransactions))
-                    : txListWidget
-            ],
-          ),
+                        0.7,
+                    child: Chart(_recentTransactions))
+                : txListWidget
+        ],
+      ),
     );
 
     return
@@ -164,12 +168,13 @@ class _MyHomePageState extends State<MyHomePage> {
         Scaffold(
             appBar: appBar,
             body: pageBody,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
             floatingActionButton: Platform.isIOS
                 ? Container()
                 : FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () => _startAddNewTransaction(context),
-        ));
+                    child: Icon(Icons.add),
+                    onPressed: () => _startAddNewTransaction(context),
+                  ));
   }
 }
